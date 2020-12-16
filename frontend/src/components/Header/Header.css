@@ -1,0 +1,131 @@
+.header-container {
+  grid-area: header;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+.logo {
+  margin: 0.5rem 1rem;
+}
+.navbar {
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: lightgray;
+}
+
+.navbar-items {
+  height: 100%;
+}
+
+.navbar-items {
+  display: flex;
+}
+
+.navbar-link {
+  list-style: none;
+}
+
+.navbar-link:hover {
+  background-color: grey;
+}
+
+.navbar-link a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding: 1rem;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 0.65rem;
+  right: 1rem;
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 2.5rem;
+  height: 2rem;
+  background-color: var(--nav-button);
+  border-color: var(--nav-button);
+  border-radius: 5px;
+}
+
+.bar {
+  width: 90%;
+  height: 14%;
+  background-color: black;
+  border-radius: 30%;
+}
+
+@media (max-width: 800px) {
+  .navbar {
+    margin-left: auto;
+    width: 10rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-button {
+    display: flex;
+  }
+
+  .navbar-items {
+    display: none;
+    margin-left: auto;
+    margin-top: 3rem;
+    width: 10rem;
+    flex-direction: column;
+    position: relative;
+    top: 3rem;
+    z-index: 1;
+  }
+
+  .navbar-link {
+    text-align: center;
+    background-color: lightgray;
+  }
+
+  .navbar-link a {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-items.active {
+    display: flex;
+  }
+  .navbar {
+    margin-left: auto;
+    width: 10rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-button {
+    display: flex;
+  }
+
+  .navbar-items {
+    display: none;
+    margin-left: auto;
+    margin-top: 3rem;
+    width: 10rem;
+    flex-direction: column;
+    position: relative;
+    top: 3rem;
+  }
+
+  .navbar-link {
+    text-align: center;
+    background-color: lightgray;
+  }
+
+  .navbar-link a {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-items.active {
+    display: flex;
+  }
+}

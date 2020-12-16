@@ -1,0 +1,100 @@
+.details-content {
+  display: flex;
+  height: 560px;
+}
+
+details {
+  display: flex;
+  background: #ffffff;
+  font-size: 16px;
+  border-bottom: 1px solid #ffffff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.4);
+  height: 2rem;
+}
+
+details[open] {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 2px;
+  height: auto;
+}
+
+details[open] p {
+  padding: 0.2rem 0.3rem;
+}
+
+details[open]:first-child {
+  margin-top: 0;
+  margin-bottom: 16px;
+  border: none;
+}
+
+details[open]:last-child {
+  margin-top: 16px;
+  margin-bottom: 0px;
+  border: none;
+}
+
+summary {
+  outline: none;
+  padding: 0.3rem 20px;
+  color: black;
+  font-size: 15px;
+}
+
+summary:hover {
+  background: lightgray;
+}
+
+details[open] summary:hover {
+  background: none;
+}
+.test {
+  height: 560px;
+}
+
+.details-content ul {
+  margin: 1rem;
+  max-width: 400px;
+  list-style-type: none;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.details-content ul:before {
+  content: attr(ariaLabel);
+  font-size: 120%;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.details-content ul li {
+  border: 1px solid #ddd;
+  padding: 6px;
+  color: black;
+  position: relative;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  right: 8px;
+}
+
+.close:hover {
+  color: red;
+}
+
+@media (max-width: 800px) {
+  .details-content {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    padding: -1rem;
+  }
+  details {
+    margin: 0;
+    padding: 0;
+  }
+}

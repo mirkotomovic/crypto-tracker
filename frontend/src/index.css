@@ -11,3 +11,50 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+:root {
+  --gray0: #f8f8f8;
+  --gray1: #dbe1e8;
+  --gray2: #b2becd;
+  --gray3: #6c7983;
+  --gray4: #454e56;
+  --gray5: #2a2e35;
+  --gray6: #12181b;
+
+  --blue: #6c63ff;
+}
+
+.light {
+  --bg: var(--gray0);
+
+  --nav-bg: var(--gray2);
+  --nav-bg-hov: var(--gray0);
+  --nav-button: var(--gray2);
+  --nav-item-text: black;
+  --text: black;
+
+  --bg-dropdown: var(--gray0);
+  --text: var(--gray6);
+  --hamburger-bar: black;
+  --border-color: var(--blue);
+  --form-color: var(--blue);
+
+  --season-btn: white;
+  --season-btn-hover: var(--gray2);
+
+  --light-shadow: rgba(0, 0, 0, 0.2);
+  --dark-shadow: rgba(0, 0, 0, 0.4);
+
+  --footer-bg: var(--gray2);
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--text);
+}
