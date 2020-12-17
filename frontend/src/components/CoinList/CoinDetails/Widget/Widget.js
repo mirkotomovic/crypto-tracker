@@ -6,7 +6,7 @@ const Widget = () => {
     <div className='widget-container'>
       <div className='widget-content'>
         <iframe
-          src='https://widget.coinlib.io/widget?type=chart&theme=light&coin_id=859&pref_coin_id=1505'
+          // src='https://widget.coinlib.io/widget?type=chart&theme=light&coin_id=859&pref_coin_id=1505'
           scrolling='auto>'
           className='widget-iframe'
         ></iframe>

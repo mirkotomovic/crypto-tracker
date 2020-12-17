@@ -4,7 +4,7 @@ import { SiBitcoin } from 'react-icons/si';
 
 import './Header.css';
 
-const Header = (props) => {
+const Header = ({ user }) => {
   const [toggle, setToggle] = useState(false);
   return (
     <header className='header-container'>
@@ -20,7 +20,7 @@ const Header = (props) => {
             <NavLink to='/'>Home</NavLink>
           </li>
           <li className='navbar-link'>
-            <NavLink to='/alerts'>Alerts Mirko</NavLink>
+            <NavLink to='/alerts'>Alerts {user}</NavLink>
           </li>
           <li className='navbar-link'>
             <NavLink to='/about'>About</NavLink>

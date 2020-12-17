@@ -21,7 +21,7 @@
   box-shadow: none;
   background: white;
 }
-/* Arrow */
+
 .select::after {
   content: '\25BC';
   position: absolute;
@@ -33,7 +33,7 @@
   pointer-events: none;
   transition: 0.25s all ease;
 }
-/* Transition */
+
 .select:hover::after {
   color: black;
 }

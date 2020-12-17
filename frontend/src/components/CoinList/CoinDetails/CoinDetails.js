@@ -1,58 +1,28 @@
 import React from 'react';
+
 import Widget from './Widget/Widget';
 import AlertForm from './AlertForm/AlertForm';
-import { FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import './CoinDetails.css';
 
-const CoinDetails = () => {
+const CoinDetails = ({ coin, fiat, notifications }) => {
+  if (!coin) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <details>
       <summary>
-        <b>Bitcoin</b>
+        <b>{coin.name}</b> <span style={{ float: 'right' }}>{coin.value}</span>
       </summary>
       <div className='details-content'>
         <Widget />
         <div className='test'>
           <AlertForm />
-          <ul ariaLabel='Alerts for '>
+          <ul aria-label='Alerts for '>
             <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
-              Test <FaTrash className='close' />
-            </li>
-            <li>
+              <FaEdit style={{ margin: '0px 5px' }} />
               Test <FaTrash className='close' />
             </li>
           </ul>

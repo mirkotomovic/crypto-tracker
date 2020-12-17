@@ -9,3 +9,15 @@ export const getNotifications = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const createNotification = async (req, res) => {
+  const notification = req.body;
+  const newNotification = new Notification(notification);
+
+  try {
+    await newNotification.save();
+    res.status(201).json(newNotification);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
