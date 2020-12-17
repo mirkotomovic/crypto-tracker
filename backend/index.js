@@ -17,19 +17,14 @@ app.use(cors());
 app.use('/notification', notificationRoutes);
 app.use('/coin', coinRoutes);
 
-// Ignore this pls xd
+// for testing with 3 cryptos
 const cryptos = [1, 1027, 328];
-const fiats = [2790, 2781, 3565];
 
-try {
+setInterval(async () => {
   for (const e1 of cryptos) {
-    for (const e2 of fiats) {
-      // await collectCoins(e1, e2);
-    }
+    await collectCoins(e1);
   }
-} catch (error) {
-  console.log(error);
-}
+}, 5000);
 
 const PORT = process.env.PORT || 5000;
 

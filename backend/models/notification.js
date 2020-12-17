@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const notificationSchema = mongoose.Schema({
   crypto: String,
-  fiat: String,
+  cmc_id: Number,
   threshold: Number,
   floor: {
     type: Boolean,

@@ -4,21 +4,18 @@ import Coin from '../models/coin.js';
 
 export const getCoin = async (req, res) => {
   try {
-    const query = {
-      fiat_cmc_id: req.query.fiat,
-    };
-    const coin = await Coin.find(query).sort({ name: 1, _id: 1 });
+    const coin = await Coin.find().sort({ name: 1, _id: 1 });
     res.status(200).json(coin);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-export const collectCoins = async (cryptoId, fiatId) => {
+export const collectCoins = async (cryptoId) => {
   try {
-    const coin = await getLatestPrice(cryptoId, fiatId);
+    const coin = await getLatestPrice(cryptoId);
 
-    const query = { cmc_id: cryptoId, fiat_cmc_id: fiatId };
+    const query = { cmc_id: cryptoId };
     await Coin.exists(query, async (error, result) => {
       if (error) {
         console.log(error);
@@ -26,8 +23,8 @@ export const collectCoins = async (cryptoId, fiatId) => {
         if (result) {
           await Coin.updateOne(
             query,
-            { value: coin.value },
-            (err, result) => {}
+            { value: coin.value, updatedAt: new Date() },
+            () => {}
           );
         } else {
           const newCoin = new Coin(coin);
@@ -40,7 +37,7 @@ export const collectCoins = async (cryptoId, fiatId) => {
   }
 };
 
-const getLatestPrice = async (cryptoId, fiatId) => {
+const getLatestPrice = async (cryptoId) => {
   const url =
     'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
 
@@ -53,7 +50,7 @@ const getLatestPrice = async (cryptoId, fiatId) => {
 
   const params = {
     id: cryptoId,
-    convert_id: fiatId,
+    convert_id: 2790, // value for euro
   };
 
   const result = await axios
@@ -63,7 +60,6 @@ const getLatestPrice = async (cryptoId, fiatId) => {
   return {
     name: result.data[cryptoId].name,
     cmc_id: cryptoId,
-    value: result.data[cryptoId].quote[fiatId].price,
-    fiat_cmc_id: fiatId,
+    value: result.data[cryptoId].quote[2790].price,
   };
 };

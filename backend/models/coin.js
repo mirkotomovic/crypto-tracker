@@ -4,8 +4,11 @@ const coinSchema = mongoose.Schema({
   name: String,
   cmc_id: Number,
   value: Number,
-  fiat_cmc_id: Number,
   createdAt: {
+    type: Date,
+    default: new Date(),
+  },
+  updatedAt: {
     type: Date,
     default: new Date(),
   },
