@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 import axios from 'axios';
 import Coin from '../models/coin.js';
 
-export const getCoin = async (req, res) => {
+export const getCoin = async () => {
   try {
     const coin = await Coin.find().sort({ name: 1, _id: 1 });
     return coin;
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    console.log(error);
   }
 };
 
