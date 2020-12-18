@@ -13,6 +13,10 @@ const notificationSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  updatedAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 const Notification = mongoose.model('Notification', notificationSchema);

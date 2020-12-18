@@ -5,7 +5,7 @@ import Coin from '../models/coin.js';
 export const getCoin = async (req, res) => {
   try {
     const coin = await Coin.find().sort({ name: 1, _id: 1 });
-    res.status(200).json(coin);
+    return coin;
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
