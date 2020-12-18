@@ -1,5 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
+// import socketIOClient from 'socket.io-client';
 
-const url = 'http://localhost:5000/coin';
+// const url = 'http://localhost:5000/coin';
 
-export const getCoins = (fiat) => axios.get(url, { params: { fiat: fiat } });
+// // export const getCoins = () => axios.get(url);

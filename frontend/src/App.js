@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 // eslint-disable-next-line
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useCookies } from 'react-cookie';
+import socketIOClient from 'socket.io-client';
 
 import Header from './components/Header/Header';
 import CoinList from './components/CoinList/CoinList';
 import { getCoins } from './actions/coin';
+import { getNotifications } from './actions/notification';
 import './App.css';
 
 function App() {
-  const [user, setUser] = useState('Mirko');
-
+  const [cookies, setCookie] = useCookies(['user']);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCoins(2790));
-  }, []);
+    const socket = socketIOClient('http://localhost:5000');
+    dispatch(getCoins(socket));
+    dispatch(getNotifications(cookies.user));
+  }, [dispatch, cookies.user]);
 
   return (
     <Router>
       <div className='app'>
-        <Header user={user} />
-        {user ? (
-          <CoinList user={user} />
+        <Header />
+        {cookies.user ? (
+          <CoinList />
         ) : (
           <form
             style={{
@@ -31,7 +35,9 @@ function App() {
               justifySelf: 'center',
             }}
             onSubmit={(e) => {
-              setUser(e.target.user.value);
+              setCookie('user', e.target.user.value, {
+                maxAge: 3600,
+              });
             }}
           >
             {' '}

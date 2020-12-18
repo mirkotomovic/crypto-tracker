@@ -1,30 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNotification } from '../../../../actions/notification';
+import {
+  createNotification,
+  updateNotification,
+} from '../../../../actions/notification';
+import { useCookies } from 'react-cookie';
 
 import './AlertForm.css';
 
-const AlertForm = ({ fiat, cryptoName, user }) => {
+const AlertForm = ({
+  coin,
+  currentNotificationId,
+  setCurrentNotificationId,
+}) => {
+  const [cookies] = useCookies(['user']);
   const dispatch = useDispatch();
 
   const [notification, setNotification] = useState({
-    crypto: cryptoName,
+    crypto: coin.name,
+    cmc_id: coin.cmc_id,
     threshold: 0,
-    owner: user, // TODO: promeni u state.owner
+    owner: cookies.user,
     floor: false,
-    fiat: fiat, // TODO: state.fiat
   });
+  const tmpNotification = useSelector((state) =>
+    currentNotificationId
+      ? state.notification.find((notif) => notif._id === currentNotificationId)
+      : null
+  );
+  useEffect(() => {
+    if (currentNotificationId) {
+      setNotification(tmpNotification);
+    }
+  }, [currentNotificationId, tmpNotification]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!currentNotificationId) {
+      dispatch(createNotification(notification));
 
-    dispatch(createNotification(notification));
-    setNotification({
-      threshold: 0,
-      owner: 'mirko', // TODO: promeni u state.owner
-      floor: false,
-      fiat: '', // TODO: state.fiat
-    });
+      setNotification({
+        ...notification,
+        threshold: 0,
+        owner: cookies.user,
+        floor: false,
+      });
+    } else {
+      dispatch(updateNotification(currentNotificationId, notification));
+
+      setNotification({
+        ...notification,
+        threshold: 0,
+        owner: cookies.user,
+        floor: false,
+      });
+      setCurrentNotificationId(null);
+    }
   };
+
   return (
     <form className='alert-form' onSubmit={handleSubmit}>
       <h1>Create notification:</h1>
@@ -34,20 +67,20 @@ const AlertForm = ({ fiat, cryptoName, user }) => {
           type='number'
           name='threshold'
           min='0'
-          value={setNotification.threshold}
+          value={notification.threshold}
           onChange={(e) =>
             setNotification({ ...notification, threshold: e.target.value })
           }
         />
       </div>
       <div className='input-group'>
-        <label htmlFor='floor'>Floor value</label>
+        <label htmlFor='floor'>Falling below threshold</label>
         <input
           type='checkbox'
-          id='floor'
-          value={setNotification.floor}
+          id={`floor${coin._id}`}
+          checked={notification.floor}
           onChange={(e) =>
-            setNotification({ ...notification, floor: e.target.value })
+            setNotification({ ...notification, floor: !notification.floor })
           }
         ></input>
       </div>

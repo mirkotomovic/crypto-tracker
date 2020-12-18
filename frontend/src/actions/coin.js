@@ -1,9 +1,9 @@
-import * as api from '../api/coin.js';
-
-export const getCoins = (fiat) => async (dispatch) => {
+export const getCoins = (socket) => async (dispatch) => {
   try {
-    const { data } = await api.getCoins(fiat);
-    dispatch({ type: 'FETCH_ALL', payload: data });
+    // const { data } = await api.getCoins();
+    socket.on('coinsUpdate', (data) => {
+      dispatch({ type: 'FETCH_ALL', payload: data });
+    });
   } catch (error) {
     console.error(error);
   }

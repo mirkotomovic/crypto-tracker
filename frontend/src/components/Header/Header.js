@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { SiBitcoin } from 'react-icons/si';
+import { useCookies } from 'react-cookie';
 
 import './Header.css';
 
-const Header = ({ user }) => {
+const Header = () => {
+  const [cookies] = useCookies(['user']);
   const [toggle, setToggle] = useState(false);
   return (
     <header className='header-container'>
@@ -17,10 +19,7 @@ const Header = ({ user }) => {
         </button>
         <ul className={`navbar-items ${toggle ? 'active' : ''}`}>
           <li className='navbar-link'>
-            <NavLink to='/'>Home</NavLink>
-          </li>
-          <li className='navbar-link'>
-            <NavLink to='/alerts'>Alerts {user}</NavLink>
+            <NavLink to='/'>Alerts {cookies.user}</NavLink>
           </li>
           <li className='navbar-link'>
             <NavLink to='/about'>About</NavLink>

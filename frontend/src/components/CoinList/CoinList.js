@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getNotifications } from '../../actions/notification';
 import CoinDetails from './CoinDetails/CoinDetails';
-import FiatSelector from './FiatSelector/FIatSelector';
 import './CoinList.css';
 
 const CoinList = () => {
-  const coin = useSelector((state) => state.coin);
-  const [fiat, setFiat] = useState(2790);
-  console.log({ coin: coin });
+  const coins = useSelector((state) => state.coin);
   const dispatch = useDispatch();
-  const notifications = useSelector((state) => state.notifications);
 
   useEffect(() => {
     dispatch(getNotifications());
@@ -19,10 +15,11 @@ const CoinList = () => {
 
   return (
     <>
-      <FiatSelector fiat={fiat} setFiat={setFiat} />
-      {coin ? (
+      {coins ? (
         <section className='coin-list'>
-          <CoinDetails coin={coin[0]} fiat={fiat} />
+          {coins.map((coin) => (
+            <CoinDetails key={coin._id} coin={coin} />
+          ))}
         </section>
       ) : (
         <></>
