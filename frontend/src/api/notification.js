@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/notification';
+const url = 'https://crypto-tracker-cmc.herokuapp.com/notification';
 
 export const getNotifications = (owner) =>
   axios.get(url, { params: { owner: owner } });

@@ -16,7 +16,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = socketIOClient('http://localhost:5000');
+    const socket = socketIOClient('https://crypto-tracker-cmc.herokuapp.com/');
     dispatch(getCoins(socket));
     dispatch(getNotifications(cookies.user));
   }, [dispatch, cookies.user]);
