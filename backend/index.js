@@ -19,6 +19,8 @@ app.use(cors());
 app.use('/notification', notificationRoutes);
 app.use('/coin', coinRoutes);
 
+app.get('/', (req, res) => res.send('Hello!'));
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -31,8 +33,13 @@ let updating = 0;
 io.on('connection', async (socket) => {
   console.log('New client connected');
   updating++;
-  const response = await getCoin();
-  socket.emit('coinsUpdate', response);
+
+  try {
+    const response = await getCoin();
+    socket.emit('coinsUpdate', response);
+  } catch (error) {
+    console.log(error);
+  }
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
@@ -43,16 +50,19 @@ io.on('connection', async (socket) => {
 setInterval(async () => await getApiAndEmit(), 10000);
 
 const getApiAndEmit = async () => {
-  console.log(updating);
-  if (updating > 0) {
-    const cryptos = [1, 1027, 328];
+  try {
+    if (updating > 0) {
+      const cryptos = [1, 1027, 328];
 
-    for (const e1 of cryptos) {
-      await collectCoins(e1);
+      for (const e1 of cryptos) {
+        await collectCoins(e1);
+      }
     }
+    const response = await getCoin();
+    io.sockets.emit('coinsUpdate', response);
+  } catch (error) {
+    console.log(error);
   }
-  const response = await getCoin();
-  io.sockets.emit('coinsUpdate', response);
 };
 
 mongoose
