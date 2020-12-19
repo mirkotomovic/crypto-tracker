@@ -16,9 +16,13 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = socketIOClient('https://crypto-tracker-cmc.herokuapp.com/');
+    if (cookies.user) {
+      const socket = socketIOClient(
+        'https://crypto-tracker-cmc.herokuapp.com/'
+      );
     dispatch(getCoins(socket));
     dispatch(getNotifications(cookies.user));
+    }
   }, [dispatch, cookies.user]);
 
   return (
