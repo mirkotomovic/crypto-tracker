@@ -1,0 +1,8 @@
+.about {
+  grid-area: content;
+  margin-top: 2rem;
+}
+
+.about h1 {
+  text-align: center;
+}

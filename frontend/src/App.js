@@ -7,6 +7,7 @@ import socketIOClient from 'socket.io-client';
 
 import Header from './components/Header/Header';
 import CoinList from './components/CoinList/CoinList';
+import About from './components/About/About';
 import { getCoins } from './actions/coin';
 import { getNotifications } from './actions/notification';
 import './App.css';
@@ -20,8 +21,8 @@ function App() {
       const socket = socketIOClient(
         'https://crypto-tracker-cmc.herokuapp.com/'
       );
-    dispatch(getCoins(socket));
-    dispatch(getNotifications(cookies.user));
+      dispatch(getCoins(socket));
+      dispatch(getNotifications(cookies.user));
     }
   }, [dispatch, cookies.user]);
 
@@ -29,38 +30,39 @@ function App() {
     <Router>
       <div className='app'>
         <Header />
-        {cookies.user ? (
-          <CoinList />
-        ) : (
-          <form
-            style={{
-              gridArea: 'content',
-              width: '400px',
-              justifySelf: 'center',
-            }}
-            onSubmit={(e) => {
-              setCookie('user', e.target.user.value, {
-                maxAge: 3600,
-              });
-            }}
-          >
-            {' '}
-            <div className='input-group'>
-              <label htmlFor='user'>Username:</label>
-              <input type='text' name='user' />
-            </div>
-            <div>
-              <input type='submit' value='Send This' />
-            </div>
-          </form>
-        )}
 
-        {/* <Switch>
-          <Route path='/people/:personID'></Route>
-          <Route exact path='/'>
-
+        <Switch>
+          <Route path='/about'>
+            <About />
           </Route>
-        </Switch> */}
+          <Route exact path='/'>
+            {cookies.user ? (
+              <CoinList />
+            ) : (
+              <form
+                style={{
+                  gridArea: 'content',
+                  width: '400px',
+                  justifySelf: 'center',
+                }}
+                onSubmit={(e) => {
+                  setCookie('user', e.target.user.value, {
+                    maxAge: 3600,
+                  });
+                }}
+              >
+                {' '}
+                <div className='input-group'>
+                  <label htmlFor='user'>Username:</label>
+                  <input type='text' name='user' />
+                </div>
+                <div>
+                  <input type='submit' value='Send This' />
+                </div>
+              </form>
+            )}
+          </Route>
+        </Switch>
         <footer className='footer'></footer>
       </div>
     </Router>
