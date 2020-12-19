@@ -48,6 +48,7 @@ function App() {
                 onSubmit={(e) => {
                   setCookie('user', e.target.user.value, {
                     maxAge: 3600,
+                    sameSite: 'lax',
                   });
                 }}
               >
