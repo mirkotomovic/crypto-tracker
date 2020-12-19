@@ -21,8 +21,8 @@ const CoinDetails = ({ coin }) => {
   );
 
   const sendNotification = (coin, t) => {
-    new Notification(`${t}`, {
-      body: `${coin.name}`,
+    new Notification(`${coin.name} value alert!`, {
+      body: `${coin.name} price reached ${t}.`,
     });
   };
 
@@ -52,7 +52,6 @@ const CoinDetails = ({ coin }) => {
             }
           });
         }
-        console.log(permission);
       });
     }
   }, [notifications, coin, dispatch]);
