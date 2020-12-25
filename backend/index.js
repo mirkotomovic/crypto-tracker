@@ -1,13 +1,14 @@
-import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import notificationRoutes from './routes/notification.js';
+import express from 'express';
+import mongoose from 'mongoose';
+import { Server } from 'socket.io';
+
 import coinRoutes from './routes/coin.js';
+import notificationRoutes from './routes/notification.js';
 import userRoutes from './routes/user.js';
 import { getCoin, collectCoins } from './controllers/coin.js';
 import { createServer } from 'http';
-import { Server } from 'socket.io';
 
 const app = express();
 
@@ -65,15 +66,14 @@ const getApiAndEmit = async () => {
   }
 };
 
-mongoose
-  .connect(process.env.DB_HOST, {
+try {
+  await mongoose.connect(process.env.DB_HOST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
-  })
-  .then(() => {
-    httpServer.listen(PORT, () =>
-      console.log(`Server running on port: ${PORT}`)
-    );
-  })
-  .catch((error) => console.error(error.message));
+  });
+
+  httpServer.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+} catch (error) {
+  console.error({ error });
+}
