@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -14,11 +13,11 @@ const app = express();
 
 dotenv.config();
 
-app.use(bodyParser.json({ limit: '30mb', extended: true }));
-app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
+app.use(express.json({ limit: '30mb', extended: true }));
+app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
-app.use('/notification', notificationRoutes);
 app.use('/coin', coinRoutes);
+app.use('/notification', notificationRoutes);
 app.use('/users', userRoutes);
 
 app.get('/', (req, res) => res.send('Hello!'));
@@ -33,8 +32,7 @@ const io = new Server(httpServer, {
 const PORT = process.env.PORT || 5000;
 let updating = 0;
 io.on('connection', async (socket) => {
-  console.log('New client connected');
-  updating++;
+  console.log(`Client number ${updating++} connected`);
 
   try {
     const response = await getCoin();
@@ -44,8 +42,7 @@ io.on('connection', async (socket) => {
   }
 
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
-    updating--;
+    console.log(`Client number ${updating--} disconnected.`);
   });
 });
 
@@ -60,6 +57,7 @@ const getApiAndEmit = async () => {
         // await collectCoins(e1);
       }
     }
+
     const response = await getCoin();
     io.sockets.emit('coinsUpdate', response);
   } catch (error) {
@@ -74,7 +72,6 @@ mongoose
     useFindAndModify: false,
   })
   .then(() => {
-    //app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
     httpServer.listen(PORT, () =>
       console.log(`Server running on port: ${PORT}`)
     );
