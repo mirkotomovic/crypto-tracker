@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import notificationRoutes from './routes/notification.js';
 import coinRoutes from './routes/coin.js';
+import userRoutes from './routes/user.js';
 import { getCoin, collectCoins } from './controllers/coin.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 app.use('/notification', notificationRoutes);
 app.use('/coin', coinRoutes);
+app.use('/users', userRoutes);
 
 app.get('/', (req, res) => res.send('Hello!'));
 
@@ -55,7 +57,7 @@ const getApiAndEmit = async () => {
       const cryptos = [1, 1027, 328];
 
       for (const e1 of cryptos) {
-        await collectCoins(e1);
+        // await collectCoins(e1);
       }
     }
     const response = await getCoin();
